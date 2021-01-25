@@ -18,13 +18,13 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commit-msg-check"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
-    "**/*.{js}": [
-      "prettier --write",
-      "eslint --fix --ext .js --ext .jsx src"
+    "*.js": [
+      "eslint --ext .js src examples",
+      "prettier --write"
     ]
   }
 }
