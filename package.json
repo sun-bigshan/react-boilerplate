@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint --ext .js src"
+  },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
@@ -20,9 +22,10 @@
     }
   },
   "lint-staged": {
-    "**/*.{js}": [
-      "cross-env NODE_ENV=production eslint --fix --ext .js --ext .jsx src",
-      "prettier --write"
+    "**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint --cache --fix",
+      "git add"
     ]
   }
 }
