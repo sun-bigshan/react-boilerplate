@@ -17,12 +17,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx}": [
+    "*.js": [
       "prettier --write",
       "eslint --cache --fix",
       "git add"
