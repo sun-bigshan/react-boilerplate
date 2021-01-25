@@ -17,7 +17,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --ext .js src examples",
+      "eslint --ext .js src",
       "prettier --write"
     ]
   },
