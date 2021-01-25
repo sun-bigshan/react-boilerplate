@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext .js src"
+    "commit-msg-check": "commitlint -E HUSKY_GIT_PARAMS"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
@@ -18,13 +18,13 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commit-msg-check"
     }
   },
   "lint-staged": {
     "**/*.{js}": [
       "prettier --write",
-      "eslint --cache --fix"
+      "eslint --fix --ext .js --ext .jsx src"
     ]
   }
 }
