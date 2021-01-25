@@ -15,17 +15,15 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
-      "eslint --cache --fix",
-      "git add"
+      "eslint --ext .js src examples",
+      "prettier --write"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
