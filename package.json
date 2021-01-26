@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "commit-msg-check": "commitlint -E HUSKY_GIT_PARAMS"
+    "serve": "http-server"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
