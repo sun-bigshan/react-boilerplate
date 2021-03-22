@@ -9,4 +9,17 @@ const Home = () => {
   return <div onClick={handlerClick}>Hello World</div>;
 };
 
+Home.getInitialProps = async () => {
+  //模拟数据请求方法
+  return {
+    page: {
+      tdk: {
+        title: '首页 - koa-react-ssr',
+        keywords: '首页关键词 koa-react-ssr',
+        description: '首页描述 koa-react-ssr'
+      }
+    }
+  };
+};
+
 export default PageContainer(Home);

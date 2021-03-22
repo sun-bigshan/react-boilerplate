@@ -1,5 +1,6 @@
 // 高阶组件 用于提取重复逻辑
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 export default SourceComponent => {
   return class HoComponent extends React.Component {
@@ -37,7 +38,6 @@ export default SourceComponent => {
     }
 
     async componentDidMount() {
-      console.log(this.props.history);
       const canClientFetch = this.props.history && this.props.history.action === 'PUSH'; //路由跳转的时候可以异步请求数据
       if (canClientFetch || !window.__IS__SSR) {
         await this.getInitialProps();
@@ -45,29 +45,19 @@ export default SourceComponent => {
     }
 
     render() {
-      // const props = {
-      //   initialData: {},
-      //   ...this.props
-      // };
-
-      // // eslint-disable-next-line no-undef
-      // if (__SERVER__) {
-      //   // 服务端渲染
-      //   props.initialData = this.props.staticContext.initialData || {};
-      // } else {
-      //   // 客户端渲染
-      //   if (this.state.canClientFetch) {
-      //     // 需要异步请求数据
-      //     props.initialData = this.state.initialData || {};
-      //   } else {
-      //     // 首次进入拿得是服务端直出的数据
-      //     props.initialData = window.__INITIAL_DATA__;
-      //     window.__INITIAL_DATA__ = {};
-      //   }
-      // }
       const initialData = this.state.initialData || {};
+      const tdk = initialData?.page?.tdk || {};
 
-      return <SourceComponent {...this.props} initialData={initialData}></SourceComponent>;
+      return (
+        <>
+          <Helmet>
+            <title>{tdk.title}</title>
+            <meta name="description" content={tdk.description} />
+            <meta name="keywords" content={tdk.keywords} />
+          </Helmet>
+          <SourceComponent {...this.props} initialData={initialData}></SourceComponent>
+        </>
+      );
     }
   };
 };

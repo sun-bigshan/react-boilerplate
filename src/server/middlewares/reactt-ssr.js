@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
+import { Helmet } from 'react-helmet';
 import App from '../../client/router/index';
 import routeList, { matchRoute } from '../../client/router/route-config';
 
@@ -27,14 +28,15 @@ export default async (ctx, next) => {
     </StaticRouter>
   );
 
+  const helmet = Helmet.renderStatic();
+
   ctx.body = `
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
       </head>
       <body>
         <div id="root">${html}</div>

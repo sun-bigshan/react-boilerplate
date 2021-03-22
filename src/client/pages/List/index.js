@@ -5,7 +5,7 @@ import tempData from './data';
 
 const List = props => {
   //渲染数据
-  const fetchData = props.initialData;
+  const { fetchData } = props.initialData;
   const { data } = fetchData || {};
   return (
     <div>
@@ -35,7 +35,16 @@ List.getInitialProps = async () => {
   };
   let res = await fetchData();
 
-  return res;
+  return {
+    fetchData: res,
+    page: {
+      tdk: {
+        title: '列表页 - koa-react-ssr',
+        keywords: '列表页关键词 koa-react-ssr',
+        description: '列表页描述 koa-react-ssr'
+      }
+    }
+  };
 };
 
 export default PageContainer(List);
