@@ -4,13 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "npm-run-all --parallel fe:watch svr:watch node:server",
     "fe:watch": "webpack --config  ./webpack/webpack.dev.config.js --watch",
-    "svr:watch": "webpack --config  ./webpack/webpack.server.config.js"
+    "svr:watch": "webpack --config  ./webpack/webpack.server.config.js --watch",
+    "node:server": "nodemon ./dist/server/app.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-react": "^7.12.13",
     "@commitlint/cli": "^11.0.0",
@@ -20,6 +23,8 @@
     "eslint-plugin-react": "^7.22.0",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "webpack": "^5.26.3",
     "webpack-cli": "^4.5.0",
@@ -41,6 +46,7 @@
     "koa-static": "^5.0.0",
     "koa2": "^2.0.0-alpha.7",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   }
 }

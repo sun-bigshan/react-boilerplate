@@ -1,4 +1,5 @@
 import React from 'react';
+import PageContainer from '../../common/components/page-container';
 
 const Home = () => {
   const handlerClick = () => {
@@ -8,4 +9,4 @@ const Home = () => {
   return <div onClick={handlerClick}>Hello World</div>;
 };
 
-export default React.memo(Home);
+export default PageContainer(Home);
