@@ -39,7 +39,7 @@ export default SourceComponent => {
 
     async componentDidMount() {
       const canClientFetch = this.props.history && this.props.history.action === 'PUSH'; //路由跳转的时候可以异步请求数据
-      if (canClientFetch || !window.__IS__SSR) {
+      if (canClientFetch || !window.IS_SSR) {
         await this.getInitialProps();
       }
     }

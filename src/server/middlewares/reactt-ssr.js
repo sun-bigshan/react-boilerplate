@@ -5,34 +5,39 @@ import { Helmet } from 'react-helmet';
 import App from '../../client/router/index';
 import routeList, { matchRoute } from '../../client/router/route-config';
 import getStaticRoutes from '../common/get-static-routes';
+import proConfig from '../../share/pro-config';
 
 const getAssets = require('../common/assets');
 
 export default async (ctx, next) => {
   const path = ctx.request.path;
 
-  //获得静态路由
-  const staticRoutesList = await getStaticRoutes(routeList);
+  let html = '',
+    fetchResult = {};
 
-  const targetRoute = matchRoute(path, staticRoutesList);
-  let fetchResult = {};
+  if (proConfig.IS_SSR) {
+    //获得静态路由
+    const staticRoutesList = await getStaticRoutes(routeList);
 
-  if (targetRoute) {
-    const fetchDataFn = targetRoute.component.getInitialProps;
-    if (fetchDataFn) {
-      fetchResult = await fetchDataFn();
+    const targetRoute = matchRoute(path, staticRoutesList);
+
+    if (targetRoute) {
+      const fetchDataFn = targetRoute.component.getInitialProps;
+      if (fetchDataFn) {
+        fetchResult = await fetchDataFn();
+      }
     }
+
+    const context = {
+      initialData: fetchResult
+    };
+
+    html = renderToString(
+      <StaticRouter location={path} context={context}>
+        <App routeList={staticRoutesList}></App>
+      </StaticRouter>
+    );
   }
-
-  const context = {
-    initialData: fetchResult
-  };
-
-  const html = renderToString(
-    <StaticRouter location={path} context={context}>
-      <App routeList={staticRoutesList}></App>
-    </StaticRouter>
-  );
 
   const helmet = Helmet.renderStatic();
   //静态资源
@@ -50,7 +55,7 @@ export default async (ctx, next) => {
       <body>
         <div id="root">${html}</div>
         <textarea id="ssrTextInitData" style="display:none;">${JSON.stringify(fetchResult)}</textarea>
-        <script>window.__IS__SSR=true</script>
+        <script>window.IS_SSR=${proConfig.IS_SSR}</script>
         ${assetsMap.js.join('')}
       </body>
     </html>
