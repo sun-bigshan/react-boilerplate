@@ -4,12 +4,17 @@ import { StaticRouter } from 'react-router';
 import { Helmet } from 'react-helmet';
 import App from '../../client/router/index';
 import routeList, { matchRoute } from '../../client/router/route-config';
+import getStaticRoutes from '../common/get-static-routes';
+
 const getAssets = require('../common/assets');
 
 export default async (ctx, next) => {
   const path = ctx.request.path;
 
-  const targetRoute = matchRoute(path, routeList);
+  //获得静态路由
+  const staticRoutesList = await getStaticRoutes(routeList);
+
+  const targetRoute = matchRoute(path, staticRoutesList);
   let fetchResult = {};
 
   if (targetRoute) {
@@ -25,7 +30,7 @@ export default async (ctx, next) => {
 
   const html = renderToString(
     <StaticRouter location={path} context={context}>
-      <App routeList={routeList}></App>
+      <App routeList={staticRoutesList}></App>
     </StaticRouter>
   );
 

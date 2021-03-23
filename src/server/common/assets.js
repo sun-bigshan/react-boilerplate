@@ -13,7 +13,6 @@ module.exports = function () {
   // eslint-disable-next-line no-undef
   if (!__IS_PROD__) {
     //开发环境
-    assets.js.push(`<script type="text/javascript"  src="${devHost}/libs.js"></script>`);
     assets.js.push(`<script type="text/javascript"  src="${devHost}/main.js"></script>`);
     assets.css.push(`<link rel="stylesheet" type="text/css" href="${devHost}/main.css" />`);
   } else {
