@@ -1,6 +1,6 @@
 import Koa from 'koa2';
 import koaStatic from 'koa-static';
-import reactSsr from '../middlewares/reactt-ssr';
+import reactSsr from '../middlewares/react-ssr';
 import proConfig from '../../share/pro-config';
 
 const port = proConfig.nodeServerPort || process.env.PORT;
