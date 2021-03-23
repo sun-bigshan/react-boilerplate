@@ -4,6 +4,7 @@ import { StaticRouter } from 'react-router';
 import { Helmet } from 'react-helmet';
 import App from '../../client/router/index';
 import routeList, { matchRoute } from '../../client/router/route-config';
+const getAssets = require('../common/assets');
 
 export default async (ctx, next) => {
   const path = ctx.request.path;
@@ -29,6 +30,8 @@ export default async (ctx, next) => {
   );
 
   const helmet = Helmet.renderStatic();
+  //静态资源
+  const assetsMap = getAssets();
 
   ctx.body = `
     <!DOCTYPE html>
@@ -37,12 +40,13 @@ export default async (ctx, next) => {
         <meta charset="UTF-8">
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
+        ${assetsMap.css.join('')}
       </head>
       <body>
         <div id="root">${html}</div>
         <textarea id="ssrTextInitData" style="display:none;">${JSON.stringify(fetchResult)}</textarea>
         <script>window.__IS__SSR=true</script>
-        <script src="index.js"></script>
+        ${assetsMap.js.join('')}
       </body>
     </html>
   `;
